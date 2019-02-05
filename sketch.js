@@ -20,6 +20,7 @@ function setup() {
     frameRate(gameSpeed);
     createCanvas(800, 800);
     snake = new Snake(0, 0);
+    snake.hitWall = false;
     ui = new UI();
     noStroke();
     newFood();

@@ -69,6 +69,7 @@ function UI() {
         textAlign(LEFT, CENTER);
         rectMode(CENTER);
         text("Wall Collision", floor(width / 7), height / 2);
+        text("Back", floor(width / 1.5), height / 1.125);
         strokeWeight(4);
         stroke(255, 50);
         if (!wallCollision) {
@@ -88,20 +89,28 @@ function UI() {
             pop();
         }
 
+        if (mouseX > 535 && mouseX < 640 && mouseY > 690 && mouseY < 720) {
+            push();
+            fill(255, 200);
+            textSize(48);
+            textAlign(LEFT, CENTER);
+            text("Back", floor(width / 1.5), height / 1.125);
+        }
+
     }
 }
 
 
 function mousePressed() {
-    // console.log(mouseX, mouseY);
     if (gamePaused) {
+        if (keyIsDown(17)) {
+            console.log(mouseX, mouseY);
+        }
 
         if (mouseX < 560 && mouseX > 245 && mouseY > 225 && mouseY < 300) {
             if (!ui.isSettingsVisible) {
                 ui.isSettingsVisible = true;
                 ui.settingsMenu();
-            } else {
-                ui.isSettingsVisible = false;
             }
         }
         if (ui.isSettingsVisible) {
@@ -110,6 +119,11 @@ function mousePressed() {
                     wallCollision = true;
                 } else {
                     wallCollision = false;
+                }
+            }
+            if (mouseX > 535 && mouseX < 640 && mouseY > 690 && mouseY < 720) {
+                if (ui.isSettingsVisible) {
+                    ui.isSettingsVisible = false;
                 }
             }
         }

@@ -5,6 +5,7 @@ function Snake(x, y) {
     this.dr = createVector(0, 1);
     this.length = 0;
     this.tail = [];
+    this.hitWall = false;
 
     this.update = function() {
         for (let i = 0; i < this.tail.length - 1; i++) {
@@ -30,8 +31,9 @@ function Snake(x, y) {
                 this.y = 0;
             }
         } else {
-            this.x = constrain(this.x += this.dr.x, 0, width - scl);
-            this.y = constrain(this.y += this.dr.y, 0, height - scl);
+            if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                this.hitWall = true;
+            }
         }
 
     }
@@ -47,19 +49,24 @@ function Snake(x, y) {
     }
 
     this.die = function() {
+        if (this.hitWall && wallCollision) {
+            tick = 0;
+            gamePaused = true;
+            console.log("Dead");
+
+        }
         for (i = 0; i < this.tail.length; i++) {
             let pos = this.tail[i];
             let d = dist(this.x, this.y, pos.x, pos.y)
             if (d < 1) {
                 tick = 0;
                 gamePaused = true;
-                console.log("dead");
+                console.log("Dead");
             }
         }
     }
 
     this.changeDir = function(dir, snakePos) {
-        console.log("snake.changeDir hit")
         if (dir.x != this.dr.x && dir.y != this.dr.y) {
             this.dr.mult(0);
             this.dr.add(dir);

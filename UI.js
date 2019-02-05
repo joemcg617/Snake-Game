@@ -35,6 +35,8 @@ function UI() {
         textSize(84);
         text("Settings", width / 2, height / 3);
         text("New Game", width / 2, height / 2);
+        textSize(28);
+        text("Created By: Joey McGroarty", width / 2, height / 1.025);
         pop();
 
         if (mouseX < 560 && mouseX > 245 && mouseY > 225 && mouseY < 300) {
@@ -85,6 +87,40 @@ function UI() {
             text("Wall Collision", width / 7, height / 2);
             pop();
         }
+
+    }
+}
+
+
+function mousePressed() {
+    // console.log(mouseX, mouseY);
+    if (gamePaused) {
+
+        if (mouseX < 560 && mouseX > 245 && mouseY > 225 && mouseY < 300) {
+            if (!ui.isSettingsVisible) {
+                ui.isSettingsVisible = true;
+                ui.settingsMenu();
+            } else {
+                ui.isSettingsVisible = false;
+            }
+        }
+        if (ui.isSettingsVisible) {
+            if (mouseX > 33 && mouseX < 400 && mouseY > 376 && mouseY < 424) {
+                if (!wallCollision) {
+                    wallCollision = true;
+                } else {
+                    wallCollision = false;
+                }
+            }
+        }
+
+        if (mouseX > 195 && mouseX < 605 && mouseY > 360 && mouseY < 420 && !ui.isSettingsVisible) {
+            gamePaused = false;
+            tick = 0;
+            lastTick = 0;
+            setup();
+        }
+
 
     }
 }

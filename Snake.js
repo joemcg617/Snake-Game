@@ -51,14 +51,15 @@ function Snake(x, y) {
             let pos = this.tail[i];
             let d = dist(this.x, this.y, pos.x, pos.y)
             if (d < 1) {
-                console.log("dead");
-                setup();
+                tick = 0;
                 gamePaused = true;
+                console.log("dead");
             }
         }
     }
 
     this.changeDir = function(dir, snakePos) {
+        console.log("snake.changeDir hit")
         if (dir.x != this.dr.x && dir.y != this.dr.y) {
             this.dr.mult(0);
             this.dr.add(dir);

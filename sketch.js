@@ -16,6 +16,7 @@ let gameSpeed = 25;
 
 function setup() {
     tick = 0;
+    dir = createVector(0, 1);
     frameRate(gameSpeed);
     createCanvas(800, 800);
     snake = new Snake(0, 0);
@@ -26,9 +27,7 @@ function setup() {
 
 
 function draw() {
-    tick++;
     background(51);
-    dir = createVector(0, 1);
     ui.showUI(hideGrid, hideScore);
     if (gamePaused) {
         ui.pauseMenu();
@@ -37,6 +36,7 @@ function draw() {
             ui.settingsMenu();
         }
     } else {
+        tick++;
         snake.update();
         snake.show();
         snake.die();
@@ -46,42 +46,10 @@ function draw() {
     }
 }
 
-function mousePressed() {
-    // console.log(mouseX, mouseY);
-    if (gamePaused) {
-        //x1: 245 x2: 560
-        //y1: 225 y2: 300
-
-        if (mouseX < 560 && mouseX > 245 && mouseY > 225 && mouseY < 300) {
-            if (!ui.isSettingsVisible) {
-                ui.isSettingsVisible = true;
-                ui.settingsMenu();
-            } else {
-                ui.isSettingsVisible = false;
-            }
-        }
-        if (ui.isSettingsVisible) {
-            if (mouseX > 33 && mouseX < 400 && mouseY > 376 && mouseY < 424) {
-                if (!wallCollision) {
-                    wallCollision = true;
-                } else {
-                    wallCollision = false;
-                }
-            }
-        }
-
-        if (mouseX > 195 && mouseX < 605 && mouseY > 360 && mouseY < 420 && !ui.isSettingsVisible) {
-            gamePaused = false;
-            setup();
-        }
-
-
-    }
-}
-
 function keyPressed() {
     if (!gamePaused) {
         if (tick > lastTick) {
+            lastTick = tick;
             switch (keyCode) {
                 case LEFT_ARROW:
                 case 65:
@@ -104,17 +72,17 @@ function keyPressed() {
                     break;
 
                 case 81:
-                    dir = createVector(0, 0);
+                    // dir = createVector(0, 0);
                     snake.length++;
                     break;
 
                 case 16:
-                    dir = createVector(0, 0);
+                    // dir = createVector(0, 0);
                     frameRate(gameSpeed + 20);
                     break;
 
                 case 71:
-                    dir = createVector(0, 0);
+                    // dir = createVector(0, 0);
                     if (hideGrid) {
                         hideGrid = false;
                     } else {
@@ -146,6 +114,10 @@ function keyPressed() {
                 gamePaused = false;
                 ui.isSettingsVisible = false;
             }
+            break;
+
+        case 71:
+            hideGrid = false;
             break;
     }
 }
